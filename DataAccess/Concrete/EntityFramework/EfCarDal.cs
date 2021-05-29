@@ -11,20 +11,20 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : EfEntityRepositoryBase<Car, ReCapContext>, ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, CarRentalContext>, ICarDal
     {
         public List<CarDetailDto> GetCarDetails()
         {
-            using (ReCapContext context = new ReCapContext())
+            using (CarRentalContext context = new CarRentalContext())
             {
                 var result = from c in context.Cars
                              join b in context.Brands
-                             on c.BrandId equals b.Id
+                             on c.BrandId equals b.BrandId
                              join cl in context.Colors
-                             on c.ColorId equals cl.Id
+                             on c.ColorId equals cl.ColorId
                              select new CarDetailDto
                              {
-                                 CarId = c.Id,                            
+                                 CarId = c.CarId,                            
                                  BrandName = b.Name,
                                  ColorName = cl.Name,
                                  DailyPrice = c.DailyPrice
