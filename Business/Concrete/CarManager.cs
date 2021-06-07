@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidations;
 using Core.Aspects.Autofac.Validation;
@@ -21,7 +22,8 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-       [ValidationAspect(typeof(CarValidator))]
+        [SecuredOperation("product.add,admin")]//Ürün ekleme işlemini sadece admin yapabilir demek bu
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             _carDal.Add(car);
