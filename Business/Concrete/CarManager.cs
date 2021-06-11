@@ -22,7 +22,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [SecuredOperation("product.add,admin")]//Ürün ekleme işlemini sadece admin yapabilir demek bu
+        [SecuredOperation("car.add,admin")]//Ürün ekleme işlemini sadece admin yapabilir demek bu
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
