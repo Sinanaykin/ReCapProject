@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidations;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -25,7 +28,10 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
+      
+      //  [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Add(IFormFile file, CarImage carImage)
         {
 
@@ -55,6 +61,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageAdded);
         }
 
+        //  [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Delete(CarImage carImage)
         {
@@ -71,7 +78,8 @@ namespace Business.Concrete
 
         }
 
-
+        //[PerformanceAspect(5)]
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
@@ -84,6 +92,8 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
+       // [PerformanceAspect(5)]
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetCarImagesByCarId(int carId)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageNull(carId));
@@ -96,7 +106,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(carId).Data);
         }
 
+        //[SecuredOperation("admin")]
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Update(IFormFile file, CarImage carImage)
         {
             var isImage = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
@@ -115,7 +127,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageUpdated);
         }
 
-
+        //Business Rules
         private IResult CheckImageLimitExceeded(int carid)
         {
             var carImagecount = _carImageDal.GetAll(p => p.CarId == carid).Count;

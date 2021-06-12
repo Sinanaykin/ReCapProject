@@ -46,8 +46,11 @@ namespace Business.Constants
         public static string RentalReturnDateError = "Araç teslim edilmemiştir.";
 
 
-        
-        
+        public static string PasswordNotStrongEnough = "Şifre Yeterince Güçlü Değil";
+
+
+
+
         public static string AllCarImages = "Araç resmi Listelendi";
 
       
