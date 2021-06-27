@@ -15,6 +15,6 @@ namespace Entities.Concrete
 
         public DateTime RentDate { get; set; }//kiralama tarihi
 
-        public DateTime ReturnDate { get; set; }//teslim tarihi
+        public DateTime? ReturnTime { get; set; }
     }
 }

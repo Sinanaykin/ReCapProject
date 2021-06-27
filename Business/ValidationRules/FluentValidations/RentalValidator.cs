@@ -11,7 +11,7 @@ namespace Business.ValidationRules.FluentValidations
         public RentalValidator()
         {
             RuleFor(r => r.RentDate).NotEmpty();
-            RuleFor(r => r.ReturnDate).NotEmpty();
+            RuleFor(r => r.ReturnTime).NotEmpty();
             RuleFor(r => r.CarId).NotEmpty();
             RuleFor(r => r.CustomerId).NotEmpty();
         }

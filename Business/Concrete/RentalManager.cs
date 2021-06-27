@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate == null)
+            if (rental.ReturnTime == null)
             {
                 return new ErrorResult(Messages.RentalReturnDateError);
             }
@@ -43,7 +44,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        [CacheAspect]
+       // [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
@@ -55,7 +56,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId));
         }
 
-      //  [SecuredOperation("admin,rental.add")]
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
+        }
+
+        //  [SecuredOperation("admin,rental.add")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Update(Rental rental)
