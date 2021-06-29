@@ -18,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
             using (CarRentalContext context = new CarRentalContext())
             {
                 var result = from r in filter == null ? context.Rentals : context.Rentals.Where(filter)
-                            
+
                              join c in context.Cars
                              on r.CarId equals c.CarId
 
@@ -27,6 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
 
                              join customer in context.Customers
                              on r.CustomerId equals customer.CustomerId
+
                              join color in context.Colors
                              on c.ColorId equals color.ColorId
 
@@ -36,13 +37,14 @@ namespace DataAccess.Concrete.EntityFramework
 
                              select new RentalDetailDto()
                              {
-                                 Id = r.RentalId,
+                                 
                                  CustomerName = user.FirstName + " " + user.LastName,
                                  BrandName = b.BrandName,
                                  RentDate = r.RentDate,
                                  ReturnTime = r.ReturnTime,
                                  DailyPrice = c.DailyPrice
-                             
+                                 //TotalPrice = Convert.ToDecimal(r.ReturnTime.Value.Day - r.RentDate.Day) * c.DailyPrice
+
                              };
 
                 return result.ToList();
