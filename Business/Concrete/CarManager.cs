@@ -59,23 +59,23 @@ namespace Business.Concrete
             return new SuccessDataResult<Car> (_carDal.Get(c => c.CarId == carId));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails());
         }
 
         [CacheAspect(5)]
-        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>( _carDal.GetAll(p => p.BrandId == brandId));//Car içindeki BranId eşitse bizim gönderdiğimiz brandId ye onları filtrele demek
+            return new SuccessDataResult<List<CarDetailDto>>( _carDal.GetCarsDetails(p => p.BrandId == brandId));//Car içindeki BranId eşitse bizim gönderdiğimiz brandId ye onları filtrele demek
             //ICarDal içinde tekrar bu metodtan oluturmaya gerek yok GetAll a filtre vererek yapabiliriz bunu
         }
 
         [CacheAspect(5)]
-        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>( _carDal.GetAll(p => p.ColorId == colorId));//Car içindeki ColorId eşitse bizim gönderdiğimiz colorId ye onları filtrele demek
-            //ICarDal içinde tekrar bu metodtan oluturmaya gerek yok GetAll a filtre vererek yapabiliriz bunu
+            return new SuccessDataResult<List<CarDetailDto>>( _carDal.GetCarsDetails(p => p.ColorId == colorId));//Car içindeki ColorId eşitse bizim gönderdiğimiz colorId ye onları filtrele demek
+            //ICarDal içinde tekrar bu metodtan oluturmaya gerek GetCarDetails GetAll a filtre vererek yapabiliriz bunu
         }
 
         [ValidationAspect(typeof(CarValidator))]
@@ -91,6 +91,11 @@ namespace Business.Concrete
             _carDal.Update(car);
             _carDal.Add(car);
             return new SuccessResult(Messages.CarUpdated); 
+        }
+
+        public IDataResult<CarDetailDto> GetCarDetails(int id)
+        {
+            return new SuccessDataResult<CarDetailDto>(_carDal.GetCarDetails(p => p.CarId == id));
         }
     }
 }

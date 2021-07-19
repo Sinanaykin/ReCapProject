@@ -53,12 +53,17 @@ namespace DataAccess.Concrete.InMemory
             return _cars.SingleOrDefault(c => c.CarId == id);
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public CarDetailDto GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
+        public List<CarDetailDto> GetCarsDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarsDetails(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
