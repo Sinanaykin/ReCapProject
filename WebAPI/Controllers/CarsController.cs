@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]/[Action]")] //Önce bu sıralamayı ardından alttaki route da verilen değeri çağırarak da  getirebiliriiz.api/cars/GetAll(metod ismi)/5(id no)
+    [Route("api/[controller]")]//Bunu kullanrak çağırmak için api/cars/getall(HttpGet içinde tanımladığımız isim)
     [ApiController]
     public class CarsController : ControllerBase
     {
@@ -21,7 +22,8 @@ namespace WebAPI.Controllers
             _carService = carService;
         }
 
-        [HttpGet("getall")]
+        
+        [HttpGet("getall")]      
         public IActionResult GetAll()
         {
             Thread.Sleep(200);
@@ -34,7 +36,8 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-
+        //[Route("{id}")]
+        //[HttpGet("getbyid/{id}")]
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {

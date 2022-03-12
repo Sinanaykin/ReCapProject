@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentalContext context = new CarRentalContext())
             {
-                var result = from c in  context.Cars.Where(filter)
+                var result = from c in  context.Cars.Where(filter) //Query expression yapısı bu ,istersen Method (Lambda expression ) ile de yapabiliriz ama Query expression daha kolay .
 
                              join b in context.Brands
                                     on c.BrandId equals b.BrandId
@@ -43,7 +43,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentalContext context = new CarRentalContext())
             {
-                var result = from c in filter == null ? context.Cars : context.Cars.Where(filter)
+                var result = from c in filter == null ? context.Cars : context.Cars.Where(filter) //Query expression yapısı bu 
 
                              join b in context.Brands
                                     on c.BrandId equals b.BrandId
@@ -59,7 +59,10 @@ namespace DataAccess.Concrete.EntityFramework
                                  DailyPrice = c.DailyPrice,
                                  CarId = c.CarId,
                                  ModelYear = c.ModelYear,
-                                 Description = c.Description
+                                 Description = c.Description,
+                                 ImagePath= context.CarImages.Where(i=>i.CarId == c.CarId).FirstOrDefault().ImagePath,//Burda mesela query expression içinde lamda expressionuda kullandık
+                                 CarImages = context.CarImages.Where(i=>i.CarId == c.CarId).ToList(),
+
                              };
                 return result.ToList();
             };

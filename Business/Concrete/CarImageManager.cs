@@ -96,14 +96,9 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<CarImage>> GetCarImagesByCarId(int carId)
         {
-            IResult result = BusinessRules.Run(CheckIfCarImageNull(carId));
+            
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c=>c.CarId==carId));
 
-            if (result != null)
-            {
-                return new ErrorDataResult<List<CarImage>>(result.Message);
-            }
-
-            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(carId).Data);
         }
 
         //[SecuredOperation("admin")]

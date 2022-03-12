@@ -26,12 +26,13 @@ namespace WebAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+       
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -91,6 +92,8 @@ namespace WebAPI
             }
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());//bu adresden yani angular tarafından gelen tüm isteklere(get,post...) izin ver diyoruz burda
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

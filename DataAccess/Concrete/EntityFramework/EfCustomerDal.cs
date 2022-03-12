@@ -19,7 +19,7 @@ namespace DataAccess.Concrete.EntityFramework
 
                 //join customer in contex.Customers on rental.CustomerId equals customer.id
                 //join user in contex.Users on customer.UserId equals user.Id
-                var result = from customer in filter == null ? context.Customers : context.Customers.Where(filter)
+                var result = from customer in filter == null ? context.Customers : context.Customers.Where(filter)//Query expression yapısı bu 
                              join user in context.Users
                              on customer.UserId equals user.Id
 

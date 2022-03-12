@@ -20,7 +20,7 @@ namespace Business.DependencyResolvers.Autufac
             builder.RegisterType<BrandManager>().As<IBrandService>().SingleInstance();
             builder.RegisterType<EfBrandDal>().As<IBrandDal>().SingleInstance();
 
-            builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();//Startupda yaptıgımız işlemi burda yapıyoruz biris IProductService isterse ona ProductManager ver.Singleinstance tek bir instance olusturuyo demek
+            builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();//Startupda yaptıgımız işlemi burda yapıyoruz birisi IProductService isterse ona ProductManager ver.Singleinstance tek bir instance olusturuyo demek
             builder.RegisterType<EfCarDal>().As<ICarDal>().SingleInstance();
 
             builder.RegisterType<ColorManager>().As<IColorService>().SingleInstance();
